@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Events - Charity Events Platform</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>❤️ Charity Events</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="search.html" class="active">Search Events</a></li>
+                <li><a href="index.html#about">About Us</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Search Page Main -->
+    <main class="search-page">
+        <div class="container">
+            <h1>Search Charity Events</h1>
+            <p class="page-subtitle">Use the filters below to find charity events that interest you</p>
+
+            <!-- Search Form -->
+            <div class="search-form-container">
+                <form id="search-form" class="search-form">
+                    <div class="form-row">
+                        <!-- Date Filter -->
+                        <div class="form-group">
+                            <label for="date-filter">Event Date</label>
+                            <input 
+                                type="date" 
+                                id="date-filter" 
+                                name="date"
+                                class="form-control"
+                            >
+                            <small>Select events on a specific date</small>
+                        </div>
+
+                        <!-- City Filter -->
+                        <div class="form-group">
+                            <label for="city-filter">City</label>
+                            <select id="city-filter" name="city" class="form-control">
+                                <option value="">All Cities</option>
+                                <!-- City options will be dynamically loaded via JavaScript -->
+                            </select>
+                            <small>Select the city where events are held</small>
+                        </div>
+
+                        <!-- Category Filter -->
+                        <div class="form-group">
+                            <label for="category-filter">Event Category</label>
+                            <select id="category-filter" name="category" class="form-control">
+                                <option value="">All Categories</option>
+                                <!-- Category options will be dynamically loaded via JavaScript -->
+                            </select>
+                            <small>Select the type of event</small>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            🔍 Search Events
+                        </button>
+                        <button type="button" id="clear-filters" class="btn btn-secondary">
+                            🔄 Clear Filters
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Error Message -->
+                <div id="search-error" class="error-message" style="display: none;"></div>
+            </div>
+
+            <!-- Search Results Section -->
+            <div class="search-results-section">
+                <!-- Results Info -->
+                <div id="results-info" class="results-info" style="display: none;">
+                    <h2>Search Results</h2>
+                    <p id="results-count"></p>
+                </div>
+
+                <!-- Loading State -->
+                <div id="search-loading" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Searching for events...</p>
+                </div>
+
+                <!-- Search Results Container -->
+                <div id="search-results" class="events-grid">
+                    <!-- Search results will be dynamically loaded via JavaScript -->
+                </div>
+
+                <!-- No Results Message -->
+                <div id="no-results" class="no-events" style="display: none;">
+                    <div class="no-results-icon">🔍</div>
+                    <h3>No Events Found</h3>
+                    <p>Please try adjusting your search criteria or clear filters to view all events</p>
+                </div>
+
+                <!-- Initial Message -->
+                <div id="initial-message" class="initial-message">
+                    <div class="search-icon">🎯</div>
+                    <h3>Start Your Search</h3>
+                    <p>Use the filters above to find charity events that interest you</p>
+                    <p>You can select one or multiple filter criteria</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Charity Events Platform. All Rights Reserved.</p>
+            <p>Together with love and action, we create a better tomorrow.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/api.js"></script>
+    <script src="js/search.js"></script>
+</body>
+</html>
