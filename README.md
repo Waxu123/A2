@@ -4,15 +4,6 @@ A dynamic web application for managing and promoting charitable events, connecti
 
 **Course:** PROG2002 Web Development II  
 **Assessment:** Assignment 2 (A2)
-## Table of Contents
-
-- [Overview](#overview)
-- [Technology Stack](#technology-stack)
-- [Features](#features)
-- [Installation Guide](#installation-guide)
-- [Usage](#usage)
-- [API Documentation](#api-documentation)
-- [Database Schema](#database-schema)
 
 ---
 
@@ -40,6 +31,9 @@ This project implements a three-tier web application that enables users to disco
 │   ├── search.html                       # Search page
 │   └── details.html                      # Event details page
 └── README.md
+
+```
+
 ## Technology Stack
 ### Backend
 - Node.js - JavaScript runtime environment
@@ -105,8 +99,6 @@ The API server will start at `http://localhost:3000`
 Verify the server is running by accessing: `http://localhost:3000`
 ### Step 4: Start Client Application
 Open a new terminal window and navigate to the client directory:
-```
-
 The client application will be available at `http://localhost:8080`
 
 ### Step 5: Access the Application
@@ -313,8 +305,5 @@ The database consists of three main tables with the following relationships:
 - Date display may vary slightly due to browser timezone settings
 ## Academic Integrity Statement
 
-This project represents original work completed independently for academic assessment. All code is authored by the student, with external resources properly referenced where applicable. This submission adheres to Southern Cross University's academic integrity policies and guidelines.
+This project represents original work completed independently for academic assessment. with external resources properly referenced where applicable. This submission adheres to Southern Cross University's academic integrity policies and guidelines.
 
----
-
-**Last Updated:** October 4, 2025
