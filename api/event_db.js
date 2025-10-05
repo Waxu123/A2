@@ -1,57 +1,57 @@
 /**
- * 数据库连接配置文件
- * 用于连接MySQL数据库 charityevents_db
+ * Database Connection Configuration File
+ * Connects to MySQL database charityevents_db
  */
 
 const mysql = require('mysql2');
 
-// 创建数据库连接池配置
+// Create database connection pool configuration
 const pool = mysql.createPool({
-    host: 'localhost',           // 数据库主机地址
-    user: 'root',                // MySQL用户名
-    password: '123456',          // MySQL密码
-    database: 'charityevents_db', // 数据库名称
+    host: 'localhost',           // Database host address
+    user: 'root',                // MySQL username
+    password: '123456',          // MySQL password
+    database: 'charityevents_db', // Database name
     waitForConnections: true,
-    connectionLimit: 10,         // 连接池最大连接数
+    connectionLimit: 10,         // Maximum number of connections in pool
     queueLimit: 0,
     enableKeepAlive: true,
     keepAliveInitialDelay: 0
 });
 
-// 使用Promise包装，便于使用async/await
+// Use Promise wrapper for async/await support
 const promisePool = pool.promise();
 
-// 测试数据库连接
+// Test database connection
 pool.getConnection((err, connection) => {
     if (err) {
-        console.error('❌ 数据库连接失败:', err.message);
+        console.error('❌ Database connection failed:', err.message);
         if (err.code === 'ECONNREFUSED') {
-            console.error('   请确保MySQL服务正在运行');
+            console.error('   Please ensure MySQL service is running');
         } else if (err.code === 'ER_ACCESS_DENIED_ERROR') {
-            console.error('   请检查数据库用户名和密码');
+            console.error('   Please check database username and password');
         } else if (err.code === 'ER_BAD_DB_ERROR') {
-            console.error('   请先运行SQL文件创建数据库');
+            console.error('   Please run the SQL file to create the database first');
         }
         return;
     }
     
     if (connection) {
-        console.log('✅ 数据库连接成功！');
-        connection.release(); // 释放连接回连接池
+        console.log('✅ Database connected successfully!');
+        connection.release(); // Release connection back to pool
     }
 });
 
-// 优雅关闭连接池
+// Gracefully close connection pool
 process.on('SIGINT', () => {
     pool.end((err) => {
         if (err) {
-            console.error('关闭数据库连接池时出错:', err);
+            console.error('Error closing database connection pool:', err);
         } else {
-            console.log('数据库连接池已关闭');
+            console.log('Database connection pool closed');
         }
         process.exit(0);
     });
 });
 
-// 导出连接池供其他模块使用
+// Export connection pool for use by other modules
 module.exports = promisePool;

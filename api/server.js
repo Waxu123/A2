@@ -1,6 +1,6 @@
 /**
- * RESTful API 服务器
- * 为慈善活动管理网站提供数据接口
+ * RESTful API Server
+ * Provides data interface for charity events management website
  */
 
 const express = require('express');
@@ -10,41 +10,41 @@ const db = require('./event_db');
 const app = express();
 const PORT = 3000;
 
-// 中间件配置
-app.use(cors()); // 允许跨域请求
-app.use(express.json()); // 解析JSON请求体
-app.use(express.urlencoded({ extended: true })); // 解析URL编码的请求体
+// Middleware configuration
+app.use(cors()); // Enable cross-origin requests
+app.use(express.json()); // Parse JSON request body
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded request body
 
-// 请求日志中间件
+// Request logging middleware
 app.use((req, res, next) => {
     console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
     next();
 });
 
 // ============================================
-// API 端点
+// API Endpoints
 // ============================================
 
 /**
- * 根路径 - API信息
+ * Root path - API information
  */
 app.get('/', (req, res) => {
     res.json({
-        message: '慈善活动管理系统 API',
+        message: 'Charity Events Management System API',
         version: '1.0.0',
         endpoints: {
-            events: '/api/events - 获取所有当前/即将举行的活动',
-            eventById: '/api/events/:id - 获取特定活动详情',
-            categories: '/api/categories - 获取所有活动类别',
-            search: '/api/events/search - 搜索活动 (查询参数: date, city, category)'
+            events: '/api/events - Get all current/upcoming events',
+            eventById: '/api/events/:id - Get specific event details',
+            categories: '/api/categories - Get all event categories',
+            search: '/api/events/search - Search events (query params: date, city, category)'
         }
     });
 });
 
 /**
- * 端点1: 获取所有当前或即将举行的活动
+ * Endpoint 1: Get all current or upcoming events
  * GET /api/events
- * 返回未暂停、状态为upcoming或ongoing的活动列表
+ * Returns non-suspended events with status 'upcoming' or 'ongoing'
  */
 app.get('/api/events', async (req, res) => {
     try {
@@ -80,25 +80,25 @@ app.get('/api/events', async (req, res) => {
             data: events
         });
     } catch (error) {
-        console.error('获取活动列表错误:', error);
+        console.error('Error fetching events list:', error);
         res.status(500).json({
             success: false,
-            message: '服务器错误',
+            message: 'Server error',
             error: error.message
         });
     }
 });
 
 /**
- * 端点4: 搜索活动 (必须在 :id 路由之前定义)
- * GET /api/events/search?date=YYYY-MM-DD&city=城市名&category=类别ID
- * 支持单个或多个筛选条件
+ * Endpoint 4: Search events (must be defined before :id route)
+ * GET /api/events/search?date=YYYY-MM-DD&city=CityName&category=CategoryID
+ * Supports single or multiple filter criteria
  */
 app.get('/api/events/search', async (req, res) => {
     try {
         const { date, city, category } = req.query;
         
-        // 基础查询
+        // Base query
         let query = `
             SELECT 
                 ce.event_id,
@@ -124,19 +124,19 @@ app.get('/api/events/search', async (req, res) => {
         
         const queryParams = [];
         
-        // 根据日期筛选
+        // Filter by date
         if (date) {
             query += ' AND ce.event_date = ?';
             queryParams.push(date);
         }
         
-        // 根据城市筛选
+        // Filter by city
         if (city) {
             query += ' AND ce.city LIKE ?';
             queryParams.push(`%${city}%`);
         }
         
-        // 根据类别筛选
+        // Filter by category
         if (category) {
             query += ' AND ce.category_id = ?';
             queryParams.push(category);
@@ -157,17 +157,17 @@ app.get('/api/events/search', async (req, res) => {
             data: events
         });
     } catch (error) {
-        console.error('搜索活动错误:', error);
+        console.error('Error searching events:', error);
         res.status(500).json({
             success: false,
-            message: '服务器错误',
+            message: 'Server error',
             error: error.message
         });
     }
 });
 
 /**
- * 端点2: 根据ID获取活动详情
+ * Endpoint 2: Get event details by ID
  * GET /api/events/:id
  */
 app.get('/api/events/:id', async (req, res) => {
@@ -195,7 +195,7 @@ app.get('/api/events/:id', async (req, res) => {
         if (events.length === 0) {
             return res.status(404).json({
                 success: false,
-                message: '未找到该活动'
+                message: 'Event not found'
             });
         }
         
@@ -204,17 +204,17 @@ app.get('/api/events/:id', async (req, res) => {
             data: events[0]
         });
     } catch (error) {
-        console.error('获取活动详情错误:', error);
+        console.error('Error fetching event details:', error);
         res.status(500).json({
             success: false,
-            message: '服务器错误',
+            message: 'Server error',
             error: error.message
         });
     }
 });
 
 /**
- * 端点3: 获取所有活动类别
+ * Endpoint 3: Get all event categories
  * GET /api/categories
  */
 app.get('/api/categories', async (req, res) => {
@@ -236,17 +236,17 @@ app.get('/api/categories', async (req, res) => {
             data: categories
         });
     } catch (error) {
-        console.error('获取类别列表错误:', error);
+        console.error('Error fetching categories list:', error);
         res.status(500).json({
             success: false,
-            message: '服务器错误',
+            message: 'Server error',
             error: error.message
         });
     }
 });
 
 /**
- * 端点5: 获取所有城市列表（用于搜索筛选）
+ * Endpoint 5: Get all cities list (for search filters)
  * GET /api/cities
  */
 app.get('/api/cities', async (req, res) => {
@@ -266,38 +266,38 @@ app.get('/api/cities', async (req, res) => {
             data: cities.map(c => c.city)
         });
     } catch (error) {
-        console.error('获取城市列表错误:', error);
+        console.error('Error fetching cities list:', error);
         res.status(500).json({
             success: false,
-            message: '服务器错误',
+            message: 'Server error',
             error: error.message
         });
     }
 });
 
-// 404 处理
+// 404 handler
 app.use((req, res) => {
     res.status(404).json({
         success: false,
-        message: '未找到请求的资源'
+        message: 'Requested resource not found'
     });
 });
 
-// 错误处理中间件
+// Error handling middleware
 app.use((err, req, res, next) => {
-    console.error('服务器错误:', err);
+    console.error('Server error:', err);
     res.status(500).json({
         success: false,
-        message: '服务器内部错误',
+        message: 'Internal server error',
         error: err.message
     });
 });
 
-// 启动服务器
+// Start server
 app.listen(PORT, () => {
     console.log('='.repeat(50));
-    console.log(`🚀 API服务器运行在: http://localhost:${PORT}`);
-    console.log(`📋 API文档: http://localhost:${PORT}`);
+    console.log(`🚀 API Server running at: http://localhost:${PORT}`);
+    console.log(`📋 API Documentation: http://localhost:${PORT}`);
     console.log('='.repeat(50));
 });
 

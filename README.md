@@ -4,9 +4,6 @@ A dynamic web application for managing and promoting charitable events, connecti
 
 **Course:** PROG2002 Web Development II  
 **Assessment:** Assignment 2 (A2)
-
----
-
 ## Table of Contents
 
 - [Overview](#overview)
@@ -28,17 +25,13 @@ This project implements a three-tier web application that enables users to disco
 ```
 .
 ├── api/
-│   ├── database/
 │   │   ├── charityevents_db.sql          # Database schema and data
 │   │   └── charityevents_db_english.sql  # English version
 │   ├── event_db.js                       # Database connection configuration
 │   ├── server.js                         # Express server and API endpoints
 │   └── package.json                      # Dependencies
-│
 ├── client/
-│   ├── css/
 │   │   └── styles.css                    # Application styling
-│   ├── js/
 │   │   ├── api.js                        # API wrapper module
 │   │   ├── home.js                       # Home page functionality
 │   │   ├── search.js                     # Search page functionality
@@ -46,29 +39,19 @@ This project implements a three-tier web application that enables users to disco
 │   ├── index.html                        # Home page
 │   ├── search.html                       # Search page
 │   └── details.html                      # Event details page
-│
 └── README.md
-```
-
----
-
 ## Technology Stack
-
 ### Backend
 - Node.js - JavaScript runtime environment
 - Express.js - Web application framework
 - MySQL - Relational database management system
 - mysql2 - MySQL client for Node.js with Promise support
 - CORS - Cross-Origin Resource Sharing middleware
-
 ### Frontend
 - HTML5 - Semantic markup structure
 - CSS3 - Styling and responsive design
 - JavaScript (ES6+) - Client-side logic and DOM manipulation
 - Fetch API - HTTP request handling
-
----
-
 ## Features
 
 ### Home Page
@@ -83,23 +66,18 @@ This project implements a three-tier web application that enables users to disco
 - Clear filters functionality demonstrating DOM manipulation
 - Search results display with error handling
 - Empty state management for no results
-
 ### Event Details Page
 - Comprehensive event information display
 - Visual fundraising progress indicators
 - Organization details and contact information
 - Registration button with modal notification (feature under construction)
 - URL parameter-based event identification
-
 ### RESTful API
 - GET /api/events - Retrieve all current and upcoming events
 - GET /api/events/:id - Retrieve specific event details
 - GET /api/categories - Retrieve all event categories
 - GET /api/cities - Retrieve all cities with available events
 - GET /api/events/search - Search events with filters
-
----
-
 ## Installation Guide
 
 ### Prerequisites
@@ -108,59 +86,25 @@ Ensure the following software is installed on your system:
 - Node.js (version 14.0 or higher)
 - MySQL (version 8.0 or higher)
 - Python 3.x (for running the client development server)
-
 ### Step 1: Database Setup
 
 1. Start your MySQL service
 
 2. Execute the database creation script:
-```bash
-mysql -u root -p < api/database/charityevents_db.sql
-```
 
 Alternatively, open and execute the SQL file in MySQL Workbench.
-
 3. Verify successful database creation:
-```sql
-USE charityevents_db;
-SHOW TABLES;
-SELECT COUNT(*) FROM charity_events;
-```
-
 Expected output: 3 tables (charity_organizations, event_categories, charity_events) with at least 10 events.
 
 ### Step 2: Configure Database Connection
-
 Edit `api/event_db.js` with your MySQL credentials:
-
-```javascript
-const pool = mysql.createPool({
-    host: 'localhost',
     user: 'root',                    // Your MySQL username
     password: 'your_password',       // Your MySQL password
-    database: 'charityevents_db'
-});
-```
-
 ### Step 3: Install Dependencies and Start API Server
-
-```bash
-cd api
-npm install
-npm start
-```
-
 The API server will start at `http://localhost:3000`
-
 Verify the server is running by accessing: `http://localhost:3000`
-
 ### Step 4: Start Client Application
-
 Open a new terminal window and navigate to the client directory:
-
-```bash
-cd client
-python -m http.server 8080
 ```
 
 The client application will be available at `http://localhost:8080`
@@ -201,9 +145,6 @@ Open your web browser and navigate to:
    - Fundraising goals and current progress
    - Organization details and contact information
 3. Click "Register" to see the feature notification modal
-
----
-
 ## API Documentation
 
 All API endpoints return JSON responses with the following standard structure:
@@ -219,20 +160,10 @@ All API endpoints return JSON responses with the following standard structure:
 ### Endpoints
 
 #### 1. Get All Events
-```
-GET /api/events
-```
 
 Returns all current and upcoming events (non-suspended, status: upcoming or ongoing).
 
 **Response Example:**
-```json
-{
-    "success": true,
-    "count": 10,
-    "data": [
-        {
-            "event_id": 1,
             "event_name": "Hope Light Charity Dinner 2025",
             "description": "A warm charity dinner fundraising for children's education",
             "event_date": "2025-11-15T00:00:00.000Z",
@@ -243,15 +174,7 @@ Returns all current and upcoming events (non-suspended, status: upcoming or ongo
             "is_free": 0,
             "category_name": "Charity Dinner",
             "organization_name": "Love Foundation"
-        }
-    ]
-}
-```
-
 #### 2. Get Event by ID
-```
-GET /api/events/:id
-```
 
 Returns detailed information for a specific event.
 
@@ -261,10 +184,6 @@ Returns detailed information for a specific event.
 **Response:** Single event object with complete details including organization and category information.
 
 #### 3. Get All Categories
-```
-GET /api/categories
-```
-
 Returns all available event categories for filtering.
 
 **Response Example:**
@@ -283,10 +202,6 @@ Returns all available event categories for filtering.
 ```
 
 #### 4. Get All Cities
-```
-GET /api/cities
-```
-
 Returns distinct cities where events are available.
 
 **Response Example:**
@@ -299,9 +214,7 @@ Returns distinct cities where events are available.
 ```
 
 #### 5. Search Events
-```
 GET /api/events/search?date=YYYY-MM-DD&city=CityName&category=ID
-```
 
 Returns events matching specified criteria. All parameters are optional and can be combined.
 
@@ -316,9 +229,6 @@ GET /api/events/search?city=Sydney&category=2
 ```
 
 **Response:** Filtered event list with applied filters echoed in response.
-
----
-
 ## Database Schema
 
 The database consists of three main tables with the following relationships:
@@ -401,9 +311,6 @@ The database consists of three main tables with the following relationships:
 - Registration functionality displays a placeholder modal as per assignment requirements
 - External image URLs may fail to load due to network conditions (fallback placeholders provided)
 - Date display may vary slightly due to browser timezone settings
-
----
-
 ## Academic Integrity Statement
 
 This project represents original work completed independently for academic assessment. All code is authored by the student, with external resources properly referenced where applicable. This submission adheres to Southern Cross University's academic integrity policies and guidelines.
@@ -411,5 +318,3 @@ This project represents original work completed independently for academic asses
 ---
 
 **Last Updated:** October 4, 2025
-
-
