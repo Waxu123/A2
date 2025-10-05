@@ -1,195 +1,231 @@
-# 慈善活动管理系统
+# Charity Events Management Platform
 
-## 项目概述
+A dynamic web application for managing and promoting charitable events, connecting charity organizations with potential participants.
 
-这是一个为慈善活动管理开发的动态网站项目，旨在连接慈善组织与潜在参与者，提供活动查看、搜索和详情展示功能。
-
-**开发者：** [您的姓名]  
-**学号：** [您的学号]  
-**课程：** PROG2002 Web Development II  
-**评估：** Assessment 2 (A2)
+**Course:** PROG2002 Web Development II  
+**Assessment:** Assignment 2 (A2)
 
 ---
 
-## 项目结构
+## Table of Contents
+
+- [Overview](#overview)
+- [Technology Stack](#technology-stack)
+- [Features](#features)
+- [Installation Guide](#installation-guide)
+- [Usage](#usage)
+- [API Documentation](#api-documentation)
+- [Database Schema](#database-schema)
+
+---
+
+## Overview
+
+This project implements a three-tier web application that enables users to discover, search, and view detailed information about charitable events. The system consists of a MySQL database backend, a RESTful API layer built with Node.js and Express, and a client-side interface developed using HTML5, CSS3, and vanilla JavaScript.
+
+### Project Structure
 
 ```
-├── api/                          # API服务器（后端）
+.
+├── api/
 │   ├── database/
-│   │   └── charityevents_db.sql  # MySQL数据库创建脚本
-│   ├── event_db.js               # 数据库连接配置
-│   ├── server.js                 # Express服务器和API端点
-│   └── package.json              # API项目依赖
+│   │   ├── charityevents_db.sql          # Database schema and data
+│   │   └── charityevents_db_english.sql  # English version
+│   ├── event_db.js                       # Database connection configuration
+│   ├── server.js                         # Express server and API endpoints
+│   └── package.json                      # Dependencies
 │
-├── client/                       # 客户端网站（前端）
+├── client/
 │   ├── css/
-│   │   └── styles.css            # 样式表
+│   │   └── styles.css                    # Application styling
 │   ├── js/
-│   │   ├── api.js                # API封装模块
-│   │   ├── home.js               # 首页脚本
-│   │   ├── search.js             # 搜索页脚本
-│   │   └── details.js            # 详情页脚本
-│   ├── index.html                # 首页
-│   ├── search.html               # 搜索页面
-│   └── details.html              # 活动详情页
+│   │   ├── api.js                        # API wrapper module
+│   │   ├── home.js                       # Home page functionality
+│   │   ├── search.js                     # Search page functionality
+│   │   └── details.js                    # Event details functionality
+│   ├── index.html                        # Home page
+│   ├── search.html                       # Search page
+│   └── details.html                      # Event details page
 │
-└── README.md                     # 项目文档（本文件）
+└── README.md
 ```
 
 ---
 
-## 技术栈
+## Technology Stack
 
-### 后端（API）
-- **Node.js** - JavaScript运行环境
-- **Express.js** - Web应用框架
-- **MySQL** - 关系型数据库
-- **mysql2** - MySQL数据库驱动
-- **CORS** - 跨域资源共享
+### Backend
+- Node.js - JavaScript runtime environment
+- Express.js - Web application framework
+- MySQL - Relational database management system
+- mysql2 - MySQL client for Node.js with Promise support
+- CORS - Cross-Origin Resource Sharing middleware
 
-### 前端（客户端）
-- **HTML5** - 页面结构
-- **CSS3** - 样式设计
-- **JavaScript (ES6+)** - 交互逻辑
-- **DOM API** - 页面元素操作
-- **Fetch API** - HTTP请求
-
----
-
-## 功能特性
-
-### 1. 首页 (index.html)
-- ✅ 展示组织使命和愿景（静态内容）
-- ✅ 动态加载即将举行的活动列表
-- ✅ 活动卡片展示（图片、名称、日期、地点、价格）
-- ✅ 链接到活动详情页
-- ✅ 联系信息展示
-
-### 2. 搜索页面 (search.html)
-- ✅ 多条件筛选表单（日期、城市、类别）
-- ✅ 动态加载筛选选项（城市和类别）
-- ✅ 清除筛选按钮（DOM操作演示）
-- ✅ 搜索结果展示
-- ✅ 错误提示和无结果处理
-
-### 3. 活动详情页 (details.html)
-- ✅ 通过URL参数传递活动ID
-- ✅ 完整活动信息展示
-- ✅ 筹款目标和进度可视化
-- ✅ 组织信息展示
-- ✅ "注册"按钮（显示"功能建设中"模态框）
-
-### 4. RESTful API
-- ✅ `GET /api/events` - 获取所有活动
-- ✅ `GET /api/events/:id` - 获取活动详情
-- ✅ `GET /api/categories` - 获取活动类别
-- ✅ `GET /api/cities` - 获取城市列表
-- ✅ `GET /api/events/search` - 搜索活动
+### Frontend
+- HTML5 - Semantic markup structure
+- CSS3 - Styling and responsive design
+- JavaScript (ES6+) - Client-side logic and DOM manipulation
+- Fetch API - HTTP request handling
 
 ---
 
-## 安装和运行指南
+## Features
 
-### 前提条件
+### Home Page
+- Displays organizational mission and contact information
+- Dynamically loads and presents upcoming charity events
+- Event cards showing key information (name, date, location, price, category)
+- Direct navigation to event details pages
 
-确保您的系统已安装以下软件：
-- [Node.js](https://nodejs.org/) (版本 14 或更高)
-- [MySQL](https://www.mysql.com/) (版本 8.0 或更高)
+### Search Page
+- Multi-criteria filtering (date, city, category)
+- Dynamically populated filter options from database
+- Clear filters functionality demonstrating DOM manipulation
+- Search results display with error handling
+- Empty state management for no results
 
-### 步骤 1: 设置数据库
+### Event Details Page
+- Comprehensive event information display
+- Visual fundraising progress indicators
+- Organization details and contact information
+- Registration button with modal notification (feature under construction)
+- URL parameter-based event identification
 
-1. 启动MySQL服务
-2. 打开MySQL命令行或MySQL Workbench
-3. 执行数据库创建脚本：
+### RESTful API
+- GET /api/events - Retrieve all current and upcoming events
+- GET /api/events/:id - Retrieve specific event details
+- GET /api/categories - Retrieve all event categories
+- GET /api/cities - Retrieve all cities with available events
+- GET /api/events/search - Search events with filters
+
+---
+
+## Installation Guide
+
+### Prerequisites
+
+Ensure the following software is installed on your system:
+- Node.js (version 14.0 or higher)
+- MySQL (version 8.0 or higher)
+- Python 3.x (for running the client development server)
+
+### Step 1: Database Setup
+
+1. Start your MySQL service
+
+2. Execute the database creation script:
 ```bash
 mysql -u root -p < api/database/charityevents_db.sql
 ```
-或在MySQL Workbench中打开并运行 `charityevents_db.sql` 文件
 
-4. 验证数据库创建成功：
+Alternatively, open and execute the SQL file in MySQL Workbench.
+
+3. Verify successful database creation:
 ```sql
 USE charityevents_db;
 SHOW TABLES;
 SELECT COUNT(*) FROM charity_events;
 ```
 
-### 步骤 2: 配置数据库连接
+Expected output: 3 tables (charity_organizations, event_categories, charity_events) with at least 10 events.
 
-打开 `api/event_db.js`，根据您的MySQL配置修改以下内容：
+### Step 2: Configure Database Connection
+
+Edit `api/event_db.js` with your MySQL credentials:
 
 ```javascript
 const pool = mysql.createPool({
     host: 'localhost',
-    user: 'root',              // 修改为您的MySQL用户名
-    password: '',              // 修改为您的MySQL密码
+    user: 'root',                    // Your MySQL username
+    password: 'your_password',       // Your MySQL password
     database: 'charityevents_db'
 });
 ```
 
-### 步骤 3: 安装API依赖并启动服务器
+### Step 3: Install Dependencies and Start API Server
 
 ```bash
-# 进入API目录
 cd api
-
-# 安装依赖
 npm install
-
-# 启动服务器
 npm start
 ```
 
-服务器将在 `http://localhost:3000` 启动
+The API server will start at `http://localhost:3000`
 
-### 步骤 4: 运行客户端网站
+Verify the server is running by accessing: `http://localhost:3000`
 
-有多种方式运行客户端：
+### Step 4: Start Client Application
 
-**选项 A: 使用VS Code Live Server扩展**
-1. 在VS Code中打开 `client` 文件夹
-2. 右键点击 `index.html`
-3. 选择 "Open with Live Server"
+Open a new terminal window and navigate to the client directory:
 
-**选项 B: 使用Python简单HTTP服务器**
 ```bash
-# 进入客户端目录
 cd client
-
-# Python 3
 python -m http.server 8080
-
-# 在浏览器中访问 http://localhost:8080
 ```
 
-**选项 C: 使用Node.js http-server**
-```bash
-# 全局安装http-server
-npm install -g http-server
+The client application will be available at `http://localhost:8080`
 
-# 进入客户端目录
-cd client
+### Step 5: Access the Application
 
-# 启动服务器
-http-server -p 8080
-
-# 在浏览器中访问 http://localhost:8080
-```
-
-### 步骤 5: 访问网站
-
-在浏览器中打开：
-- 首页: `http://localhost:8080/index.html`
-- 搜索页: `http://localhost:8080/search.html`
+Open your web browser and navigate to:
+- Home Page: `http://localhost:8080/index.html`
+- Search Page: `http://localhost:8080/search.html`
 
 ---
 
-## API 端点文档
+## Usage
 
-### 1. 获取所有活动
+### Browsing Events
+
+1. Navigate to the home page to view all current and upcoming charity events
+2. Scroll through the event listings displayed in card format
+3. Click "View Details" on any event card to see comprehensive information
+
+### Searching Events
+
+1. Navigate to the search page from the main navigation menu
+2. Apply filters based on your preferences:
+   - Select a specific date using the date picker
+   - Choose a city from the dropdown menu
+   - Select an event category from available options
+3. Click "Search Events" to retrieve filtered results
+4. Click "Clear Filters" to reset all search criteria
+
+### Viewing Event Details
+
+1. Click on any event from the home page or search results
+2. Review comprehensive event information including:
+   - Event description and detailed information
+   - Date, time, and location details
+   - Ticket pricing information
+   - Fundraising goals and current progress
+   - Organization details and contact information
+3. Click "Register" to see the feature notification modal
+
+---
+
+## API Documentation
+
+All API endpoints return JSON responses with the following standard structure:
+
+```json
+{
+    "success": boolean,
+    "count": number,
+    "data": array|object
+}
+```
+
+### Endpoints
+
+#### 1. Get All Events
 ```
 GET /api/events
 ```
-**响应示例:**
+
+Returns all current and upcoming events (non-suspended, status: upcoming or ongoing).
+
+**Response Example:**
 ```json
 {
     "success": true,
@@ -197,192 +233,183 @@ GET /api/events
     "data": [
         {
             "event_id": 1,
-            "event_name": "希望之光慈善晚宴2025",
-            "description": "...",
-            "event_date": "2025-11-15",
-            ...
+            "event_name": "Hope Light Charity Dinner 2025",
+            "description": "A warm charity dinner fundraising for children's education",
+            "event_date": "2025-11-15T00:00:00.000Z",
+            "event_time": "18:00:00",
+            "location": "City Center Hotel",
+            "city": "Sydney",
+            "ticket_price": 150.00,
+            "is_free": 0,
+            "category_name": "Charity Dinner",
+            "organization_name": "Love Foundation"
         }
     ]
 }
 ```
 
-### 2. 获取活动详情
+#### 2. Get Event by ID
 ```
 GET /api/events/:id
 ```
-**参数:** `id` - 活动ID
 
-### 3. 获取活动类别
+Returns detailed information for a specific event.
+
+**Parameters:**
+- `id` (path parameter) - Event ID (integer)
+
+**Response:** Single event object with complete details including organization and category information.
+
+#### 3. Get All Categories
 ```
 GET /api/categories
 ```
 
-### 4. 获取城市列表
+Returns all available event categories for filtering.
+
+**Response Example:**
+```json
+{
+    "success": true,
+    "count": 7,
+    "data": [
+        {
+            "category_id": 1,
+            "category_name": "Charity Dinner",
+            "description": "Formal fundraising dinner events"
+        }
+    ]
+}
+```
+
+#### 4. Get All Cities
 ```
 GET /api/cities
 ```
 
-### 5. 搜索活动
+Returns distinct cities where events are available.
+
+**Response Example:**
+```json
+{
+    "success": true,
+    "count": 4,
+    "data": ["Sydney", "Melbourne", "Brisbane", "Perth"]
+}
 ```
-GET /api/events/search?date=YYYY-MM-DD&city=城市&category=类别ID
+
+#### 5. Search Events
 ```
-**查询参数:**
-- `date` (可选) - 活动日期
-- `city` (可选) - 城市名称
-- `category` (可选) - 类别ID
+GET /api/events/search?date=YYYY-MM-DD&city=CityName&category=ID
+```
+
+Returns events matching specified criteria. All parameters are optional and can be combined.
+
+**Query Parameters:**
+- `date` (optional) - Event date in YYYY-MM-DD format
+- `city` (optional) - City name (partial matching supported)
+- `category` (optional) - Category ID (integer)
+
+**Example Request:**
+```
+GET /api/events/search?city=Sydney&category=2
+```
+
+**Response:** Filtered event list with applied filters echoed in response.
 
 ---
 
-## 数据库设计
+## Database Schema
 
-### 表结构
+The database consists of three main tables with the following relationships:
 
-#### 1. charity_organizations (慈善组织)
-- `organization_id` (主键)
-- `organization_name`
-- `description`
-- `contact_email`
-- `contact_phone`
-- `website`
+### Tables
 
-#### 2. event_categories (活动类别)
-- `category_id` (主键)
-- `category_name`
-- `description`
+**charity_organizations**
+- organization_id (PRIMARY KEY, AUTO_INCREMENT)
+- organization_name (VARCHAR(200), NOT NULL)
+- description (TEXT)
+- contact_email (VARCHAR(100))
+- contact_phone (VARCHAR(20))
+- website (VARCHAR(200))
+- created_at (TIMESTAMP)
 
-#### 3. charity_events (慈善活动)
-- `event_id` (主键)
-- `event_name`
-- `description`
-- `detailed_description`
-- `event_date`
-- `event_time`
-- `location`
-- `city`
-- `address`
-- `category_id` (外键)
-- `organization_id` (外键)
-- `ticket_price`
-- `is_free`
-- `fundraising_goal`
-- `current_funds`
-- `max_participants`
-- `current_participants`
-- `image_url`
-- `is_suspended`
-- `status`
+**event_categories**
+- category_id (PRIMARY KEY, AUTO_INCREMENT)
+- category_name (VARCHAR(100), NOT NULL)
+- description (TEXT)
+- created_at (TIMESTAMP)
 
-### 关系
-- 一个慈善组织可以举办多个活动 (1:N)
-- 一个活动类别可以包含多个活动 (1:N)
+**charity_events**
+- event_id (PRIMARY KEY, AUTO_INCREMENT)
+- event_name (VARCHAR(200), NOT NULL)
+- description (TEXT, NOT NULL)
+- detailed_description (TEXT)
+- event_date (DATE, NOT NULL)
+- event_time (TIME)
+- location (VARCHAR(200), NOT NULL)
+- city (VARCHAR(100), NOT NULL)
+- address (TEXT)
+- category_id (FOREIGN KEY, NOT NULL)
+- organization_id (FOREIGN KEY, NOT NULL)
+- ticket_price (DECIMAL(10,2))
+- is_free (BOOLEAN)
+- fundraising_goal (DECIMAL(12,2))
+- current_funds (DECIMAL(12,2))
+- max_participants (INT)
+- current_participants (INT)
+- image_url (VARCHAR(300))
+- is_suspended (BOOLEAN)
+- status (ENUM: 'upcoming', 'ongoing', 'completed')
+- created_at (TIMESTAMP)
+- updated_at (TIMESTAMP)
 
----
+### Relationships
+- One organization can host many events (1:N)
+- One category can contain many events (1:N)
+- Each event belongs to exactly one organization and one category
 
-## 测试指南
-
-### 使用Postman测试API
-
-1. 下载并安装 [Postman](https://www.postman.com/)
-2. 创建新请求集合
-3. 测试以下端点：
-
-**测试 1: 获取所有活动**
-- 方法: GET
-- URL: `http://localhost:3000/api/events`
-
-**测试 2: 获取特定活动**
-- 方法: GET
-- URL: `http://localhost:3000/api/events/1`
-
-**测试 3: 搜索活动**
-- 方法: GET
-- URL: `http://localhost:3000/api/events/search?city=悉尼`
-
-### 浏览器测试
-
-1. **首页测试**
-   - 验证活动列表是否正确加载
-   - 检查活动卡片显示是否完整
-   - 点击"查看详情"按钮
-
-2. **搜索页测试**
-   - 选择不同筛选条件
-   - 点击"搜索活动"
-   - 点击"清除筛选"
-   - 验证结果显示
-
-3. **详情页测试**
-   - 从首页或搜索页点击活动
-   - 验证详情信息完整性
-   - 点击"立即注册"按钮查看模态框
+### Indexes
+- idx_event_date on charity_events(event_date)
+- idx_event_city on charity_events(city)
+- idx_event_category on charity_events(category_id)
+- idx_event_status on charity_events(status)
+- idx_event_suspended on charity_events(is_suspended)
 
 ---
 
-## 开发日志
+## Testing
 
-### 第1周 - 数据库设计
-- ✅ 设计ER图
-- ✅ 创建数据库表
-- ✅ 插入测试数据
+### API Testing with Postman
 
-### 第2周 - API开发
-- ✅ 配置Express服务器
-- ✅ 实现数据库连接
-- ✅ 开发RESTful端点
+1. Import or create requests for each endpoint
+2. Test with various parameters and verify responses
+3. Check error handling by providing invalid inputs
 
-### 第3周 - 前端开发
-- ✅ 创建HTML页面结构
-- ✅ 实现CSS样式
-- ✅ 开发JavaScript交互
+### Browser Testing
 
-### 第4周 - 测试与优化
-- ✅ API测试
-- ✅ 浏览器兼容性测试
-- ✅ 代码优化和注释
+1. Verify all pages load without console errors
+2. Test navigation between pages
+3. Confirm dynamic data loading and display
+4. Test search functionality with different filter combinations
+5. Verify responsive design at different viewport sizes
 
 ---
 
-## 已知问题和限制
+## Known Limitations
 
-1. **注册功能未实现** - 按照要求，注册按钮仅显示"功能建设中"提示
-2. **图片链接** - 使用外部图片URL，可能因网络问题加载失败（已提供占位图备选）
-3. **时区问题** - 日期显示可能因浏览器时区设置略有偏差
-
----
-
-## 未来改进计划（A3）
-
-根据评估简报，以下功能将在评估3中实现：
-- 用户注册和登录系统
-- 活动报名/购票功能
-- 管理员后台
-- 支付集成
-- 使用AngularJS重构（可选）
+- Registration functionality displays a placeholder modal as per assignment requirements
+- External image URLs may fail to load due to network conditions (fallback placeholders provided)
+- Date display may vary slightly due to browser timezone settings
 
 ---
 
-## 参考资源
+## Academic Integrity Statement
 
-- [Express.js官方文档](https://expressjs.com/)
-- [MySQL官方文档](https://dev.mysql.com/doc/)
-- [MDN Web文档](https://developer.mozilla.org/)
-- [Node.js官方文档](https://nodejs.org/docs/)
+This project represents original work completed independently for academic assessment. All code is authored by the student, with external resources properly referenced where applicable. This submission adheres to Southern Cross University's academic integrity policies and guidelines.
 
 ---
 
-## 学术诚信声明
+**Last Updated:** October 4, 2025
 
-本项目为个人独立完成的学术作业。所有代码均为原创编写，参考的外部资源已在适当位置注明。本人已阅读并理解SCU学术诚信政策，确保提交作品符合所有学术要求。
-
----
-
-## 联系方式
-
-如有问题或需要帮助，请联系：
-- **学生邮箱:** [您的邮箱]
-- **GitHub仓库:** [您的GitHub链接]
-
----
-
-**最后更新:** 2025年10月3日
 

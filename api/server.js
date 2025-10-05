@@ -90,6 +90,83 @@ app.get('/api/events', async (req, res) => {
 });
 
 /**
+ * 端点4: 搜索活动 (必须在 :id 路由之前定义)
+ * GET /api/events/search?date=YYYY-MM-DD&city=城市名&category=类别ID
+ * 支持单个或多个筛选条件
+ */
+app.get('/api/events/search', async (req, res) => {
+    try {
+        const { date, city, category } = req.query;
+        
+        // 基础查询
+        let query = `
+            SELECT 
+                ce.event_id,
+                ce.event_name,
+                ce.description,
+                ce.event_date,
+                ce.event_time,
+                ce.location,
+                ce.city,
+                ce.ticket_price,
+                ce.is_free,
+                ce.image_url,
+                ce.status,
+                cat.category_name,
+                org.organization_name
+            FROM charity_events ce
+            JOIN event_categories cat ON ce.category_id = cat.category_id
+            JOIN charity_organizations org ON ce.organization_id = org.organization_id
+            WHERE ce.is_suspended = FALSE 
+            AND ce.status IN ('upcoming', 'ongoing')
+            AND ce.event_date >= CURDATE()
+        `;
+        
+        const queryParams = [];
+        
+        // 根据日期筛选
+        if (date) {
+            query += ' AND ce.event_date = ?';
+            queryParams.push(date);
+        }
+        
+        // 根据城市筛选
+        if (city) {
+            query += ' AND ce.city LIKE ?';
+            queryParams.push(`%${city}%`);
+        }
+        
+        // 根据类别筛选
+        if (category) {
+            query += ' AND ce.category_id = ?';
+            queryParams.push(category);
+        }
+        
+        query += ' ORDER BY ce.event_date ASC';
+        
+        const [events] = await db.query(query, queryParams);
+        
+        res.json({
+            success: true,
+            count: events.length,
+            filters: {
+                date: date || null,
+                city: city || null,
+                category: category || null
+            },
+            data: events
+        });
+    } catch (error) {
+        console.error('搜索活动错误:', error);
+        res.status(500).json({
+            success: false,
+            message: '服务器错误',
+            error: error.message
+        });
+    }
+});
+
+/**
  * 端点2: 根据ID获取活动详情
  * GET /api/events/:id
  */
@@ -169,83 +246,6 @@ app.get('/api/categories', async (req, res) => {
 });
 
 /**
- * 端点4: 搜索活动
- * GET /api/events/search?date=YYYY-MM-DD&city=城市名&category=类别ID
- * 支持单个或多个筛选条件
- */
-app.get('/api/events/search', async (req, res) => {
-    try {
-        const { date, city, category } = req.query;
-        
-        // 基础查询
-        let query = `
-            SELECT 
-                ce.event_id,
-                ce.event_name,
-                ce.description,
-                ce.event_date,
-                ce.event_time,
-                ce.location,
-                ce.city,
-                ce.ticket_price,
-                ce.is_free,
-                ce.image_url,
-                ce.status,
-                cat.category_name,
-                org.organization_name
-            FROM charity_events ce
-            JOIN event_categories cat ON ce.category_id = cat.category_id
-            JOIN charity_organizations org ON ce.organization_id = org.organization_id
-            WHERE ce.is_suspended = FALSE 
-            AND ce.status IN ('upcoming', 'ongoing')
-            AND ce.event_date >= CURDATE()
-        `;
-        
-        const queryParams = [];
-        
-        // 根据日期筛选
-        if (date) {
-            query += ' AND ce.event_date = ?';
-            queryParams.push(date);
-        }
-        
-        // 根据城市筛选
-        if (city) {
-            query += ' AND ce.city LIKE ?';
-            queryParams.push(`%${city}%`);
-        }
-        
-        // 根据类别筛选
-        if (category) {
-            query += ' AND ce.category_id = ?';
-            queryParams.push(category);
-        }
-        
-        query += ' ORDER BY ce.event_date ASC';
-        
-        const [events] = await db.query(query, queryParams);
-        
-        res.json({
-            success: true,
-            count: events.length,
-            filters: {
-                date: date || null,
-                city: city || null,
-                category: category || null
-            },
-            data: events
-        });
-    } catch (error) {
-        console.error('搜索活动错误:', error);
-        res.status(500).json({
-            success: false,
-            message: '服务器错误',
-            error: error.message
-        });
-    }
-});
-
-/**
  * 端点5: 获取所有城市列表（用于搜索筛选）
  * GET /api/cities
  */
@@ -302,4 +302,5 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
+
 

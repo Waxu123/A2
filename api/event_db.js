@@ -55,4 +55,3 @@ process.on('SIGINT', () => {
 
 // 导出连接池供其他模块使用
 module.exports = promisePool;
-

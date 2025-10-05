@@ -261,4 +261,3 @@ function clearFilters() {
 function viewEventDetails(eventId) {
     window.location.href = `details.html?id=${eventId}`;
 }
-

@@ -227,3 +227,4 @@ JOIN event_categories cat ON ce.category_id = cat.category_id
 JOIN charity_organizations org ON ce.organization_id = org.organization_id
 ORDER BY ce.event_date;
 
+

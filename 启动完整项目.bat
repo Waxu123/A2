@@ -40,4 +40,3 @@ start http://localhost:8080/index.html
 echo.
 echo To stop the servers, close the API and Client windows.
 echo.
-

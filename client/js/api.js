@@ -166,4 +166,3 @@ function hideLoading(elementId) {
         loadingElement.style.display = 'none';
     }
 }
-

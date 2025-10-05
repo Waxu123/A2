@@ -121,3 +121,126 @@
     <script src="js/home.js"></script>
 </body>
 </html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charity Events Platform - Home</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>❤️ Charity Events</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="search.html">Search Events</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <header class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Change the World with Love</h2>
+                <p>Join our charity events and make a difference for those in need</p>
+                <a href="search.html" class="btn btn-primary">Browse All Events</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2>Our Mission</h2>
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="icon">🎯</div>
+                    <h3>Our Vision</h3>
+                    <p>Build a platform connecting charitable organizations with caring individuals, ensuring every act of kindness reaches those who need it most.</p>
+                </div>
+                <div class="about-card">
+                    <div class="icon">🤝</div>
+                    <h3>Our Mission</h3>
+                    <p>Organize diverse charity events to raise funds for education, health, environment, and community development, creating a better future.</p>
+                </div>
+                <div class="about-card">
+                    <div class="icon">💡</div>
+                    <h3>Our Values</h3>
+                    <p>Transparency, Integrity, Efficiency. We ensure every donation is used wisely and every event creates real impact.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section class="events-section">
+        <div class="container">
+            <h2>Upcoming Events</h2>
+            <p class="section-subtitle">Join these amazing charity events and let your compassion shine</p>
+            
+            <!-- Loading State -->
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Loading events...</p>
+            </div>
+            
+            <!-- Error Message -->
+            <div id="error-message" class="error-message" style="display: none;"></div>
+            
+            <!-- Events Container -->
+            <div id="events-container" class="events-grid">
+                <!-- Event cards will be dynamically loaded via JavaScript -->
+            </div>
+            
+            <!-- No Events Message -->
+            <div id="no-events" class="no-events" style="display: none;">
+                <p>No upcoming events at the moment. Please check back later.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="icon">📧</div>
+                    <h3>Email</h3>
+                    <p>info@charityevents.org</p>
+                </div>
+                <div class="contact-item">
+                    <div class="icon">📞</div>
+                    <h3>Phone</h3>
+                    <p>1300-CHARITY (1300-242-748)</p>
+                </div>
+                <div class="contact-item">
+                    <div class="icon">📍</div>
+                    <h3>Address</h3>
+                    <p>Sydney, NSW 2000, Australia</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Charity Events Platform. All Rights Reserved.</p>
+            <p>Together with love and action, we create a better tomorrow.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/api.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>
